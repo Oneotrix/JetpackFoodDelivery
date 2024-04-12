@@ -12,12 +12,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun ProductsGrid() {
+fun ProductsGrid(paddingValues: PaddingValues) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         verticalArrangement = Arrangement.spacedBy(8.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
-        contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 0.dp),
+        contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = paddingValues.calculateTopPadding(), bottom = 0.dp),
         content = {
             items(20) {
                 ProductCard(title = "Том Ям", description = "500 г", currentPrice = 720)
@@ -30,5 +30,5 @@ fun ProductsGrid() {
 @Composable
 @Preview
 fun ProductGridPreview() {
-    ProductsGrid()
+    ProductsGrid(PaddingValues(16.dp))
 }
