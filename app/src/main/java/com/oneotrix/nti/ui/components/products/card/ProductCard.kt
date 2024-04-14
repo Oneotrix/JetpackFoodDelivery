@@ -1,5 +1,6 @@
-package com.oneotrix.nti.ui.features.screens.view.card
+package com.oneotrix.nti.ui.components.products.card
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -25,11 +26,15 @@ fun ProductCard(
     modifier: Modifier = Modifier.size(
         width = 168.dp, height = 290.dp
     ),
+    id: Int,
     title: String,
     description: String,
     currentPrice: Int,
-    previousPrice: Int? = null,
+    oldPrice: Int? = null,
     imgUrl: String = "",
+    selectionCount: Int,
+    callbackPutInBasket: (productId: Int) -> Unit,
+    callbackRemoveFromBasket: (productId: Int) -> Unit,
 ) {
     Card(
         modifier = modifier,
@@ -63,7 +68,17 @@ fun ProductCard(
             Spacer(modifier = Modifier.height(12.dp))
 
 
-            ProductCardButton()
+            ProductCardButton(
+                currentPrice = currentPrice,
+                oldPrice = oldPrice,
+                selectionCount = selectionCount,
+                callbackPutInBasket = {
+                    callbackPutInBasket.invoke(id)
+                },
+                callbackRemoveFromBasket = {
+                    callbackRemoveFromBasket.invoke(id)
+                }
+            )
         }
     }
 }
@@ -71,5 +86,16 @@ fun ProductCard(
 @Preview(widthDp = 168, heightDp = 290)
 @Composable
 fun ProductCardPreview() {
-    ProductCard(title = "Том Ям", description = "500 г", currentPrice = 720)
+    ProductCard(
+        title = "Том Ям",
+        description = "500 г",
+        currentPrice = 720,
+        id = 1,
+        selectionCount = 0,
+        callbackRemoveFromBasket = {
+        },
+        callbackPutInBasket = {
+
+        }
+        )
 }

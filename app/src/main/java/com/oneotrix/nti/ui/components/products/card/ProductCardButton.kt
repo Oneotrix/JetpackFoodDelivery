@@ -1,4 +1,4 @@
-package com.oneotrix.nti.ui.features.screens.view.card
+package com.oneotrix.nti.ui.components.products.card
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -15,6 +15,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -31,22 +32,38 @@ import com.oneotrix.nti.ui.theme.buttonTextStyle
 import com.oneotrix.nti.ui.theme.cardLineThroughTextStyle
 
 @Composable
-fun ProductCardButton() {
-    var count by rememberSaveable { mutableStateOf(0) }
+fun ProductCardButton(
+    currentPrice: Int,
+    oldPrice: Int?,
+    selectionCount: Int,
+    callbackPutInBasket: () -> Unit,
+    callbackRemoveFromBasket: () -> Unit,
+    ) {
+    var count by rememberSaveable { mutableIntStateOf(selectionCount) }
 
     if (count == 0) {
-        ProductButtonUnselectProducts(currentPrice = 720, onCountChange = {
-            count += it
-        })
+        ProductButtonUnselectProducts(
+            currentPrice = currentPrice,
+            oldPrice = oldPrice,
+            onCountChange = {
+                count += it
+                callbackPutInBasket.invoke()
+            }
+        )
     } else {
         ProductButtonSelectedProduct(count = count, onCountChange = {
             count += it
+            if (it >= 0) {
+                callbackPutInBasket.invoke()
+            } else {
+                callbackRemoveFromBasket.invoke()
+            }
         })
     }
 }
 
 @Composable
-fun ProductButtonUnselectProducts(currentPrice: Int, oldPrice: Int? = null, onCountChange: (Int) -> Unit) {
+fun ProductButtonUnselectProducts(currentPrice: Int, oldPrice: Int?, onCountChange: (Int) -> Unit) {
     ElevatedButton(
         modifier = Modifier.fillMaxWidth(),
         onClick = { onCountChange.invoke(1) },
@@ -66,27 +83,23 @@ fun ProductButtonUnselectProducts(currentPrice: Int, oldPrice: Int? = null, onCo
                 color = MaterialTheme.colorScheme.onSurface
             )
 
-            when(oldPrice == null) {
-                true -> {}
-                false -> {
-                    Spacer(modifier = Modifier.width(8.dp))
+            if (oldPrice != null) {
+                Spacer(modifier = Modifier.width(8.dp))
 
-                    Text(
-                        text = "$oldPrice ₽",
-                        style = cardLineThroughTextStyle,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        textDecoration = TextDecoration.LineThrough
-                    )
-                }
+                Text(
+                    text = "$oldPrice ₽",
+                    style = cardLineThroughTextStyle,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    textDecoration = TextDecoration.LineThrough
+                )
             }
-
         }
     }
 }
 @Preview(widthDp = 143, heightDp = 40)
 @Composable
 fun ProductButtonUnselectProductsPreview() {
-    //ProductButton(720,  800)
+    ProductButtonUnselectProducts(720,  800, {})
 }
 
 

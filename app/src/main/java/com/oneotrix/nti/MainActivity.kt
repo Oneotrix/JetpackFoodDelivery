@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.oneotrix.nti.ui.features.screens.ProductsScreen
+import com.oneotrix.nti.ui.screens.products.ProductsScreen
 import com.oneotrix.nti.ui.theme.NTITheme
 
 class MainActivity : ComponentActivity() {

@@ -1,4 +1,4 @@
-package com.oneotrix.nti.ui.features.screens.view
+package com.oneotrix.nti.ui.components.products
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -20,6 +20,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -28,11 +29,17 @@ import com.oneotrix.nti.R
 
 
 @Composable
-fun ProductTopAppBar() {
+fun ProductTopAppBar(
+    isElevation: Boolean,
+) {
     val list = listOf("Суши","Суши","Суши","Суши","Суши","Суши","Суши","Суши","Суши","Суши","Суши","Суши","Суши","Суши",)
+    val elevation = if (isElevation) 30.dp else 0.dp
+
     Column(
-        modifier = Modifier.background(MaterialTheme.colorScheme.background),
+        modifier = Modifier
+            .background(MaterialTheme.colorScheme.background),
         verticalArrangement = Arrangement.spacedBy(8.dp),
+
     ) {
         TopBarHead()
         TopBarFilters(filters = list)
@@ -41,7 +48,7 @@ fun ProductTopAppBar() {
 @Preview
 @Composable
 fun ProductTopAppBarPreview() {
-    ProductTopAppBar()
+    ProductTopAppBar(true)
 }
 
 @Composable
