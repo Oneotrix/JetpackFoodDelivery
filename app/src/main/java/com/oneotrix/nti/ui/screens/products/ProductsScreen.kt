@@ -30,11 +30,11 @@ fun ProductsScreen(
                 callbackPutInBasket = { productId ->
                     productsViewModel.putProductInBasket(productId)
                 },
-                callbackRemoveFromBasket = {productId ->
+                callbackRemoveFromBasket = { productId ->
                     productsViewModel.removeProductFromBasket(productId)
                 },
-                callbackScrollGrid = {
-                    productsViewModel.updateScrollState(it)
+                callbackScrollGrid = { isScrolled ->
+                    productsViewModel.updateScrollState(isScrolled)
                 }
             )
         },

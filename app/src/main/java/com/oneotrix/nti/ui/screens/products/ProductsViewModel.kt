@@ -1,6 +1,5 @@
 package com.oneotrix.nti.ui.screens.products
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.oneotrix.nti.mock.Data
 import com.oneotrix.nti.ui.screens.products.ProductsViewModel.UiState.*
@@ -9,7 +8,6 @@ import com.oneotrix.nti.ui.screens.products.models.ProductModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-import kotlin.time.Duration.Companion.nanoseconds
 
 
 class ProductsViewModel() : ViewModel() {

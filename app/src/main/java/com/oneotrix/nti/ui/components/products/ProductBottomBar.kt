@@ -1,21 +1,17 @@
 package com.oneotrix.nti.ui.components.products
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -31,21 +27,13 @@ fun ProductBottomBar(
     currentPrice: Int,
 ) {
     if (currentPrice != 0) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(color = MaterialTheme.colorScheme.background)
-                .shadow(elevation = 4.dp, spotColor = MaterialTheme.colorScheme.background)
+        BottomAppBar(
+            containerColor = MaterialTheme.colorScheme.background,
+            contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 12.dp, bottom = 12.dp),
         ) {
             Button(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(
-                        start = 16.dp,
-                        end = 16.dp,
-                        top = 12.dp,
-                        bottom = 12.dp
-                    ),
+                    .fillMaxWidth(),
                 contentPadding = PaddingValues(top = 16.dp, bottom = 16.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = MaterialTheme.colorScheme.primary,
@@ -61,7 +49,7 @@ fun ProductBottomBar(
                 )
 
                 Spacer(modifier = Modifier.width(8.dp))
-                
+
                 Text(
                     text = "$currentPrice ₽",
                     style = buttonTextStyle
@@ -69,6 +57,7 @@ fun ProductBottomBar(
             }
         }
     }
+
 }
 
 @Preview

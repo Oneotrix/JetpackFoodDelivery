@@ -1,18 +1,19 @@
 package com.oneotrix.nti.ui.components.products
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MediumTopAppBar
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -28,22 +29,24 @@ import androidx.compose.ui.unit.dp
 import com.oneotrix.nti.R
 
 
+
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProductTopAppBar(
     isElevation: Boolean,
 ) {
     val list = listOf("Суши","Суши","Суши","Суши","Суши","Суши","Суши","Суши","Суши","Суши","Суши","Суши","Суши","Суши",)
-    val elevation = if (isElevation) 30.dp else 0.dp
+    val elevation = if(isElevation) 4.dp else 0.dp
+    MediumTopAppBar(
+        modifier = Modifier.shadow(elevation = elevation),
+        actions = { TopBarHead()},
+        title = { TopBarFilters(filters = list)},
+        colors = TopAppBarDefaults.mediumTopAppBarColors(
+            containerColor = MaterialTheme.colorScheme.background,
+        )
 
-    Column(
-        modifier = Modifier
-            .background(MaterialTheme.colorScheme.background),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
+    )
 
-    ) {
-        TopBarHead()
-        TopBarFilters(filters = list)
-    }
 }
 @Preview
 @Composable
@@ -80,8 +83,7 @@ fun TopBarHeadPreview() {
 fun TopBarFilters(filters: List<String>) {
     LazyRow(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(start = 16.dp),
+            .fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalAlignment = Alignment.CenterVertically,
         content = {
