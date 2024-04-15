@@ -50,8 +50,7 @@ class ProductsViewModel() : ViewModel() {
     fun removeProductFromBasket(id: Int) {
 
         val changePrice = _productsState.value.products
-            .filter { it.id == id}
-            .first()
+            .first { it.id == id }
             .currentPrice * -1
 
         val newProductsList = _productsState.value.products
