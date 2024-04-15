@@ -1,16 +1,16 @@
 plugins {
-    alias(libs.plugins.androidApplication)
-    alias(libs.plugins.jetbrainsKotlinAndroid)
+    alias(core.plugins.androidApplication)
+    alias(core.plugins.jetbrainsKotlinAndroid)
 }
 
 android {
     namespace = "com.oneotrix.nti"
-    compileSdk = 34
+    compileSdk = core.versions.compileSdk.get().toInt()
 
     defaultConfig {
         applicationId = "com.oneotrix.nti"
-        minSdk = 26
-        targetSdk = 34
+        minSdk = core.versions.minSdk.get().toInt()
+        targetSdk = core.versions.targetSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
 
@@ -51,21 +51,34 @@ android {
 
 dependencies {
 
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.ui)
-    implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.material3)
-    implementation(libs.androidx.view.model.compose)
+    implementation(core.androidx.core.ktx)
+    implementation(core.androidx.lifecycle.runtime.ktx)
+    implementation(core.androidx.activity.compose)
+    implementation(platform(core.androidx.compose.bom))
+    implementation(core.androidx.ui)
+    implementation(core.androidx.ui.graphics)
+    implementation(core.androidx.ui.tooling.preview)
+    implementation(core.androidx.material3)
+    implementation(core.androidx.view.model.compose)
 
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.ui.test.junit4)
-    debugImplementation(libs.androidx.ui.tooling)
-    debugImplementation(libs.androidx.ui.test.manifest)
+    // Network
+    implementation(network.okhttp)
+    implementation(network.okhttp.loggingInterceptor)
+    implementation(network.retrofit)
+    implementation(network.retrofit.kotlinx.serialization)
+
+    // Serialization
+    implementation(json.kotlinx.serializarion)
+
+    // Asynchronously
+    implementation(core.coroutines)
+
+
+    testImplementation(core.junit)
+    androidTestImplementation(core.androidx.junit)
+    androidTestImplementation(core.androidx.espresso.core)
+    androidTestImplementation(platform(core.androidx.compose.bom))
+    androidTestImplementation(core.androidx.ui.test.junit4)
+    debugImplementation(core.androidx.ui.tooling)
+    debugImplementation(core.androidx.ui.test.manifest)
 }

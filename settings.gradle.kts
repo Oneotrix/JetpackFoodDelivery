@@ -17,6 +17,21 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
     }
+    versionCatalogs {
+        create("core") {
+            from(files("version-catalog/core.toml"))
+        }
+        create("json") {
+            from(files("version-catalog/json.toml"))
+        }
+        create("network") {
+            from(files("version-catalog/network.toml"))
+        }
+        create("storage") {
+            from(files("version-catalog/storage.toml"))
+        }
+    }
+
 }
 
 rootProject.name = "NTI"
