@@ -1,6 +1,7 @@
 package com.oneotrix.nti.ui.screens.products
 
 import androidx.lifecycle.ViewModel
+import com.oneotrix.nti.domain.usecase.GetAllProductsUseCase
 import com.oneotrix.nti.mock.Data
 import com.oneotrix.nti.ui.screens.products.ProductsViewModel.UiState.*
 import com.oneotrix.nti.ui.screens.products.models.FilterModel
@@ -10,7 +11,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
 
-class ProductsViewModel() : ViewModel() {
+class ProductsViewModel(
+    private val getAllProductsUseCase: GetAllProductsUseCase
+) : ViewModel() {
 
     private val _productsState = MutableStateFlow(ProductsState())
     private val _filtersState = MutableStateFlow(FiltersState())

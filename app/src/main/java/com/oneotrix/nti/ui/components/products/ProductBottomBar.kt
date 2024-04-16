@@ -25,6 +25,7 @@ import com.oneotrix.nti.ui.theme.buttonTextStyle
 @Composable
 fun ProductBottomBar(
     currentPrice: Int,
+    onBasketScreen: () -> Unit
 ) {
     if (currentPrice != 0) {
         BottomAppBar(
@@ -40,7 +41,7 @@ fun ProductBottomBar(
                     contentColor = MaterialTheme.colorScheme.background
                 ),
                 shape = MaterialTheme.shapes.small,
-                onClick = { /*TODO*/ }
+                onClick = { onBasketScreen.invoke() }
             ) {
                 Icon(
                     imageVector = ImageVector.vectorResource(id = R.drawable.ic_basket),
@@ -63,5 +64,5 @@ fun ProductBottomBar(
 @Preview
 @Composable
 fun ProductBottomBarPreview() {
-    ProductBottomBar(720)
+    ProductBottomBar(720, {})
 }

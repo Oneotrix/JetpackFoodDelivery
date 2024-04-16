@@ -1,0 +1,8 @@
+# Remember that "-" symbols in dependencie name will be converted into "."-notaion in build scripts
+[versions]
+koin = "3.5.6"
+
+[libraries]
+koin-bom = {module = "io.insert-koin:koin-bom", version.ref = "koin"}
+koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose"}
+kion-ktor = { module = "io.insert-koin:koin-ktor"}

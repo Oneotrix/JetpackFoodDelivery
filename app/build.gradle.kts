@@ -52,10 +52,13 @@ android {
 
 dependencies {
 
+    implementation(platform(di.koin.bom))
+    implementation(platform(core.androidx.compose.bom))
+
+
     implementation(core.androidx.core.ktx)
     implementation(core.androidx.lifecycle.runtime.ktx)
     implementation(core.androidx.activity.compose)
-    implementation(platform(core.androidx.compose.bom))
     implementation(core.androidx.ui)
     implementation(core.androidx.ui.graphics)
     implementation(core.androidx.ui.tooling.preview)
@@ -74,6 +77,11 @@ dependencies {
     // Asynchronously
     implementation(core.coroutines)
 
+    //Di
+    implementation(di.koin.androidx.compose)
+
+    //Navigation
+    implementation(core.navigation.compose)
 
     testImplementation(core.junit)
     androidTestImplementation(core.androidx.junit)

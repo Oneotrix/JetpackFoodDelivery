@@ -24,6 +24,7 @@ fun ProductsGrid(
     callbackPutInBasket: (productId: Int) -> Unit,
     callbackRemoveFromBasket: (productId: Int) -> Unit,
     callbackScrollGrid: (Boolean) -> Unit,
+    onProductScreen: () -> Unit,
 ) {
     LazyVerticalGrid(
         modifier = Modifier.nestedScroll(object : NestedScrollConnection {
@@ -59,6 +60,7 @@ fun ProductsGrid(
                     selectionCount = it.countInBasket,
                     callbackPutInBasket = callbackPutInBasket,
                     callbackRemoveFromBasket = callbackRemoveFromBasket,
+                    onProductScreen = onProductScreen
                 )
             }
         }

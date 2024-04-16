@@ -2,6 +2,7 @@ package com.oneotrix.nti.ui.components.products.card
 
 import android.util.Log
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -35,15 +36,15 @@ fun ProductCard(
     selectionCount: Int,
     callbackPutInBasket: (productId: Int) -> Unit,
     callbackRemoveFromBasket: (productId: Int) -> Unit,
+    onProductScreen: () -> Unit,
 ) {
     Card(
-        modifier = modifier,
+        modifier = modifier.clickable { onProductScreen.invoke() },
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface
         ),
         shape = MaterialTheme.shapes.medium
     ) {
-
         Image(
             modifier = Modifier
                 .height(170.dp)
@@ -96,6 +97,9 @@ fun ProductCardPreview() {
         },
         callbackPutInBasket = {
 
+        },
+        onProductScreen = {
+
         }
-        )
+    )
 }

@@ -30,6 +30,9 @@ dependencyResolutionManagement {
         create("storage") {
             from(files("version-catalog/storage.toml"))
         }
+        create("di") {
+            from(files("version-catalog/di.toml"))
+        }
     }
 
 }
