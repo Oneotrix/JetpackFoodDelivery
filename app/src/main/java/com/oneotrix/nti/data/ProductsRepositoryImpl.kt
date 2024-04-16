@@ -1,13 +1,21 @@
 package com.oneotrix.nti.data
 
+import com.oneotrix.nti.data.network.MapperResponse
+import com.oneotrix.nti.data.network.NetworkDataSource
+import com.oneotrix.nti.domain.models.ProductModel
 import com.oneotrix.nti.domain.repository.ProductsRepository
 
-class ProductsRepositoryImpl : ProductsRepository {
-    override fun getProducts() {
-        TODO("Not yet implemented")
+
+class ProductsRepositoryImpl(
+    private val networkDataSource: NetworkDataSource
+) : ProductsRepository {
+
+    override suspend fun getProducts(): List<ProductModel> {
+        return networkDataSource.getProducts()
+            .map { MapperResponse.mapGetProductResponse(it) }
     }
 
-    override fun getProduct(id: Int) {
-        TODO("Not yet implemented")
+    override suspend fun getProduct(id: Int) {
+
     }
 }

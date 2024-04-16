@@ -1,13 +1,11 @@
 package com.oneotrix.nti.ui.components.products.card
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -24,22 +22,19 @@ import com.oneotrix.nti.ui.theme.body1TextStyle
 
 @Composable
 fun ProductCard(
-    modifier: Modifier = Modifier.size(
-        width = 168.dp, height = 290.dp
-    ),
     id: Int,
     title: String,
-    description: String,
+    measure: Int,
+    measureUnit: String,
     currentPrice: Int,
     oldPrice: Int? = null,
-    imgUrl: String = "",
     selectionCount: Int,
     callbackPutInBasket: (productId: Int) -> Unit,
     callbackRemoveFromBasket: (productId: Int) -> Unit,
     onProductScreen: () -> Unit,
 ) {
     Card(
-        modifier = modifier.clickable { onProductScreen.invoke() },
+        modifier = Modifier.clickable { onProductScreen.invoke() },
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface
         ),
@@ -62,7 +57,7 @@ fun ProductCard(
                 color = MaterialTheme.colorScheme.onSurface
             )
             Text(
-                text = description,
+                text = "$measure $measureUnit",
                 style = body1TextStyle,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -80,16 +75,20 @@ fun ProductCard(
                     callbackRemoveFromBasket.invoke(id)
                 }
             )
+
+            Spacer(modifier = Modifier.height(12.dp))
+
         }
     }
 }
 
-@Preview(widthDp = 168, heightDp = 290)
+@Preview(widthDp = 168, heightDp = 400)
 @Composable
 fun ProductCardPreview() {
     ProductCard(
-        title = "Том Ям",
-        description = "500 г",
+        title = "Запеченный ролл с мидией \n3 ШТ",
+        measure = 500,
+        measureUnit = "Г",
         currentPrice = 720,
         id = 1,
         selectionCount = 0,

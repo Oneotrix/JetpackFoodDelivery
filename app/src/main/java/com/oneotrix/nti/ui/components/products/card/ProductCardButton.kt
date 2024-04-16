@@ -16,7 +16,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -26,7 +25,6 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-
 import com.oneotrix.nti.R
 import com.oneotrix.nti.ui.theme.buttonTextStyle
 import com.oneotrix.nti.ui.theme.cardLineThroughTextStyle
@@ -84,14 +82,15 @@ fun ProductButtonUnselectProducts(currentPrice: Int, oldPrice: Int?, onCountChan
             )
 
             if (oldPrice != null) {
-                Spacer(modifier = Modifier.width(8.dp))
-
-                Text(
-                    text = "$oldPrice ₽",
-                    style = cardLineThroughTextStyle,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    textDecoration = TextDecoration.LineThrough
-                )
+                if (oldPrice < 999) {
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(
+                        text = "$oldPrice ₽",
+                        style = cardLineThroughTextStyle,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        textDecoration = TextDecoration.LineThrough
+                    )
+                }
             }
         }
     }
@@ -99,7 +98,7 @@ fun ProductButtonUnselectProducts(currentPrice: Int, oldPrice: Int?, onCountChan
 @Preview(widthDp = 143, heightDp = 40)
 @Composable
 fun ProductButtonUnselectProductsPreview() {
-    ProductButtonUnselectProducts(720,  800, {})
+    ProductButtonUnselectProducts(720,  1000, {})
 }
 
 

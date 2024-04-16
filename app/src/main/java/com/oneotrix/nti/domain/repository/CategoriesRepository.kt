@@ -1,7 +1,9 @@
 package com.oneotrix.nti.domain.repository
 
+import com.oneotrix.nti.domain.models.CategoryModel
+
 interface CategoriesRepository {
 
-    fun getCategories()
+    suspend fun getCategories() : List<CategoryModel>
 
 }

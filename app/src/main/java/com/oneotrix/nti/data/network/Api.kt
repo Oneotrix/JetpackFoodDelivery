@@ -1,17 +1,19 @@
 package com.oneotrix.nti.data.network
 
+import com.oneotrix.nti.data.network.models.GetCategoryResponse
+import com.oneotrix.nti.data.network.models.GetProductResponse
 import retrofit2.http.GET
 
 interface Api {
 
     @GET("Categories.json")
-    fun getCategories()
+    suspend fun getCategories() : List<GetCategoryResponse>
 
     @GET("Products.json")
-    fun getProducts()
+    suspend fun getProducts() : List<GetProductResponse>
 
     @GET("Tags.json")
-    fun getTags()
+    suspend fun getTags()
 
     companion object {
         const val BASE_URL = "https://anika1d.github.io/WorkTestServer/"

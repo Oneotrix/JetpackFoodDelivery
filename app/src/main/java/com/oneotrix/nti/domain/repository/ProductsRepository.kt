@@ -1,10 +1,12 @@
 package com.oneotrix.nti.domain.repository
 
+import com.oneotrix.nti.domain.models.ProductModel
+
 interface ProductsRepository {
 
-    fun getProducts()
+    suspend fun getProducts() : List<ProductModel>
 
-    fun getProduct(id: Int)
+    suspend fun getProduct(id: Int)
 
 
 }

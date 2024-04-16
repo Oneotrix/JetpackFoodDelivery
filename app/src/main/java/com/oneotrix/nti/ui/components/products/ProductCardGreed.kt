@@ -29,7 +29,6 @@ fun ProductsGrid(
     LazyVerticalGrid(
         modifier = Modifier.nestedScroll(object : NestedScrollConnection {
             override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
-                Log.d("LazyVerticalGrid", "${available.getDistance()}")
                 if (available.y < 0) {
                     callbackScrollGrid.invoke(true)
                 } else {
@@ -54,7 +53,8 @@ fun ProductsGrid(
                 ProductCard(
                     id = it.id,
                     title = it.title,
-                    description = it.description,
+                    measure = it.measure,
+                    measureUnit = it.measureUnit,
                     currentPrice = it.currentPrice,
                     oldPrice = it.oldPrice,
                     selectionCount = it.countInBasket,

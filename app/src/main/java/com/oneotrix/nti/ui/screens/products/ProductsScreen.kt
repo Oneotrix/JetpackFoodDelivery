@@ -21,10 +21,17 @@ fun ProductsScreen(
     val productState = viewModel.productsState.collectAsState()
     val basketState = viewModel.basketState.collectAsState()
     val scrollState = viewModel.scrollState.collectAsState()
+    val filtersState = viewModel.filtersState.collectAsState()
 
     Scaffold(
         contentWindowInsets = WindowInsets(top = 16.dp) ,
-        topBar = { ProductTopAppBar(isElevation = scrollState.value.scrolled) },
+        topBar = { ProductTopAppBar(
+            isElevation = scrollState.value.scrolled,
+            filters = filtersState.value.filters,
+            callbackSelectFilter = { id ->
+                viewModel.selectFilter(id)
+            }
+        ) },
         content = {
             ProductsGrid(
                 paddingValues = it,

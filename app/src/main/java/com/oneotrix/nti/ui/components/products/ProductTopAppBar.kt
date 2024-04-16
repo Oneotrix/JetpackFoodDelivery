@@ -15,10 +15,6 @@ import androidx.compose.material3.MediumTopAppBar
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -27,20 +23,25 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.oneotrix.nti.R
-
+import com.oneotrix.nti.ui.screens.products.models.FilterModel
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProductTopAppBar(
     isElevation: Boolean,
+    filters: List<FilterModel>,
+    callbackSelectFilter: (Int) -> Unit,
 ) {
-    val list = listOf("Суши","Суши","Суши","Суши","Суши","Суши","Суши","Суши","Суши","Суши","Суши","Суши","Суши","Суши",)
+
     val elevation = if(isElevation) 4.dp else 0.dp
     MediumTopAppBar(
         modifier = Modifier.shadow(elevation = elevation),
         actions = { TopBarHead()},
-        title = { TopBarFilters(filters = list)},
+        title = { TopBarFilters(
+            filters = filters,
+            callbackSelectFilter
+        )},
         colors = TopAppBarDefaults.mediumTopAppBarColors(
             containerColor = MaterialTheme.colorScheme.background,
         )
@@ -51,7 +52,7 @@ fun ProductTopAppBar(
 @Preview
 @Composable
 fun ProductTopAppBarPreview() {
-    ProductTopAppBar(true)
+   // ProductTopAppBar(true)
 }
 
 @Composable
@@ -80,15 +81,21 @@ fun TopBarHeadPreview() {
 }
 
 @Composable
-fun TopBarFilters(filters: List<String>) {
+fun TopBarFilters(
+    filters: List<FilterModel>,
+    callbackSelectFilter: (Int) -> Unit,
+) {
     LazyRow(
         modifier = Modifier
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalAlignment = Alignment.CenterVertically,
         content = {
-            items(filters) {
-                FilterElement(title = it)
+            items(filters) { filter ->
+                FilterElement(
+                    filter = filter,
+                    callbackSelectFilter = callbackSelectFilter
+                )
             }
         }
     )
@@ -96,18 +103,19 @@ fun TopBarFilters(filters: List<String>) {
 @Preview
 @Composable
 fun TopBarFiltersPreview() {
-    val list = listOf("Суши","Суши","Суши","Суши","Суши","Суши","Суши","Суши","Суши","Суши","Суши","Суши","Суши","Суши",)
-    TopBarFilters(filters = list)
+   // TopBarFilters(filters = list)
 }
 
 @Composable
-fun FilterElement(title: String) {
-    var selected by remember { mutableStateOf(false) }
+fun FilterElement(
+    filter: FilterModel,
+    callbackSelectFilter: (Int) -> Unit,
+) {
 
     FilterChip(
-        selected = selected,
-        onClick = { selected = !selected},
-        label = { Text(text = title) },
+        selected = filter.isSelected,
+        onClick = { callbackSelectFilter.invoke(filter.id) },
+        label = { Text(text = filter.name) },
         shape = FilterChipDefaults.shape,
         colors = FilterChipDefaults.filterChipColors(
             containerColor = MaterialTheme.colorScheme.background,
@@ -121,5 +129,5 @@ fun FilterElement(title: String) {
 @Preview
 @Composable
 fun FilterElementPreview() {
-    FilterElement(title = "Суши")
+  //  FilterElement(title = "Суши")
 }
