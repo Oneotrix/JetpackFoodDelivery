@@ -1,0 +1,9 @@
+# Remember that "-" symbols in dependencie name will be converted into "."-notaion in build scripts
+[versions]
+realm = "1.11.0"
+
+[libraries]
+realm = { module = "io.realm.kotlin:library-base", version.ref = "realm"}
+
+[plugins]
+realm = {id = "io.realm.kotlin", version.ref = "realm"}

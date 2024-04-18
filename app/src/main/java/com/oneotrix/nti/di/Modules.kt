@@ -5,12 +5,16 @@ import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFact
 import com.oneotrix.nti.data.CategoriesRepositoryImpl
 import com.oneotrix.nti.data.ProductsRepositoryImpl
 import com.oneotrix.nti.data.TagsRepositoryImpl
+import com.oneotrix.nti.data.local.LocalDataSource
+import com.oneotrix.nti.data.local.models.ProductsRealm
+import com.oneotrix.nti.data.local.models.SingleProductRealm
 import com.oneotrix.nti.data.network.Api
 import com.oneotrix.nti.data.network.NetworkDataSource
 import com.oneotrix.nti.domain.repository.CategoriesRepository
 import com.oneotrix.nti.domain.repository.ProductsRepository
 import com.oneotrix.nti.domain.repository.TagsRepository
 import com.oneotrix.nti.domain.usecase.DeleteProductFromBasketUseCase
+import com.oneotrix.nti.domain.usecase.FilterProductsByCategoryUseCase
 import com.oneotrix.nti.domain.usecase.GetAllCategoriesUseCase
 import com.oneotrix.nti.domain.usecase.GetAllProductsUseCase
 import com.oneotrix.nti.domain.usecase.GetSingleProductUseCase
@@ -18,6 +22,9 @@ import com.oneotrix.nti.domain.usecase.PutProductInBasketUseCase
 import com.oneotrix.nti.ui.screens.basket.BasketViewModel
 import com.oneotrix.nti.ui.screens.product.ProductViewModel
 import com.oneotrix.nti.ui.screens.products.ProductsViewModel
+import io.realm.kotlin.Configuration
+import io.realm.kotlin.Realm
+import io.realm.kotlin.RealmConfiguration
 import kotlinx.serialization.json.Json
 import okhttp3.Interceptor
 import okhttp3.MediaType
@@ -32,18 +39,19 @@ import retrofit2.Retrofit
 
 val appModule = module {
 
-    single<ProductsRepository>{ ProductsRepositoryImpl(get()) }
+    single<ProductsRepository>{ ProductsRepositoryImpl(get(), get()) }
     single<CategoriesRepository>{ CategoriesRepositoryImpl(get()) }
     single<TagsRepository>{ TagsRepositoryImpl() }
 
     single { NetworkDataSource() }
-
+    single { LocalDataSource() }
 
     factory { GetAllProductsUseCase() }
     factory { GetAllCategoriesUseCase() }
     factory { GetSingleProductUseCase() }
     factory { DeleteProductFromBasketUseCase() }
     factory { PutProductInBasketUseCase() }
+    factory { FilterProductsByCategoryUseCase() }
 
     viewModel { ProductsViewModel() }
     viewModel { ProductViewModel() }
@@ -83,6 +91,18 @@ val networkModule = module {
 
     factory<Json>{ Json }
 
+}
+
+val dbModule = module {
+    single<Configuration> {
+        RealmConfiguration.create(schema = setOf(
+            ProductsRealm::class,
+            SingleProductRealm::class
+        )
+        )
+    }
+
+    single<Realm>{ Realm.open(get()) }
 }
 
 

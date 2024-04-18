@@ -15,7 +15,7 @@ composeBom = "2024.04.00"
 viewModelCompose = "2.7.0"
 
 # Coroutines
-coroutines = "1.7.1"
+coroutines = "1.8.0"
 
 #Navigation
 navVersion = "2.7.7"
@@ -40,7 +40,8 @@ androidx-view-model-compose = {group = "androidx.lifecycle", name = "lifecycle-v
 navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navVersion"}
 
 # Coroutines
-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines"}
+coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines"}
+coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "androidGradlePlugin" }

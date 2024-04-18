@@ -2,4 +2,6 @@
 plugins {
     alias(core.plugins.androidApplication) apply false
     alias(core.plugins.jetbrainsKotlinAndroid) apply false
+    alias(storage.plugins.realm) apply false
+
 }

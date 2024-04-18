@@ -2,6 +2,7 @@ plugins {
     alias(core.plugins.androidApplication)
     alias(core.plugins.jetbrainsKotlinAndroid)
     alias(core.plugins.kotlin.serialization)
+    alias(storage.plugins.realm)
 }
 
 android {
@@ -75,13 +76,17 @@ dependencies {
     implementation(json.kotlinx.serializarion)
 
     // Asynchronously
-    implementation(core.coroutines)
+    implementation(core.coroutines.android)
+    implementation(core.coroutines.core)
 
     //Di
     implementation(di.koin.androidx.compose)
 
     //Navigation
     implementation(core.navigation.compose)
+
+    //Storage
+    implementation(storage.realm)
 
     testImplementation(core.junit)
     androidTestImplementation(core.androidx.junit)
