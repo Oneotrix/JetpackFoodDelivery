@@ -1,6 +1,5 @@
 package com.oneotrix.nti.data
 
-import android.util.Log
 import com.oneotrix.nti.data.local.LocalDataSource
 import com.oneotrix.nti.data.network.MapperData
 import com.oneotrix.nti.data.network.NetworkDataSource
@@ -14,18 +13,19 @@ class ProductsRepositoryImpl(
     private val networkDataSource: NetworkDataSource,
     private val localDataSource: LocalDataSource
 ) : ProductsRepository {
-
-    override suspend fun getProducts(): Flow<ProductModel>  {
+    override suspend fun fetchProducts(): Flow<ProductModel> {
         val products = networkDataSource.getProducts()
-                .map { MapperData.mapGetProductResponse(it) }
+            .map { MapperData.mapGetProductResponse(it) }
 
         localDataSource.saveProducts(products)
 
-        return flow {
-            localDataSource.getProducts().collect {
-                it.list.forEach { productRealm ->
-                    emit(MapperData.mapProductRealm(productRealm))
-                }
+        return getProducts()
+    }
+
+    override suspend fun getProducts(): Flow<ProductModel> = flow {
+        localDataSource.getProducts().collect {
+            it.list.forEach { productRealm ->
+                emit(MapperData.mapProductRealm(productRealm))
             }
         }
     }
@@ -38,7 +38,6 @@ class ProductsRepositoryImpl(
         return flow {
             localDataSource.getProductByCategory(id).collect {
                 it.list.forEach { productRealm ->
-                    Log.d("ProductsViewModel", "${productRealm.categoryId}")
                     emit(MapperData.mapProductRealm(productRealm))
                 }
             }

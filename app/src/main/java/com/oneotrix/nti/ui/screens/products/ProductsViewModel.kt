@@ -2,6 +2,7 @@ package com.oneotrix.nti.ui.screens.products
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.oneotrix.nti.domain.usecase.FetchAllProductsUseCase
 import com.oneotrix.nti.domain.usecase.FilterProductsByCategoryUseCase
 import com.oneotrix.nti.domain.usecase.GetAllCategoriesUseCase
 import com.oneotrix.nti.domain.usecase.GetAllProductsUseCase
@@ -22,9 +23,10 @@ import org.koin.core.component.inject
 class ProductsViewModel(
 ) : ViewModel(), KoinComponent {
 
-    private val getAllProductsUseCase: GetAllProductsUseCase by inject()
+    private val fetchAllProductsUseCase: FetchAllProductsUseCase by inject()
     private val getAllCategoriesUseCase: GetAllCategoriesUseCase by inject()
     private val filterProductsByCategoryUseCase: FilterProductsByCategoryUseCase by inject()
+    private val getAllProductsUseCase : GetAllProductsUseCase by inject()
 
     private val _productsState = MutableStateFlow(ProductsState())
     private val _filtersState = MutableStateFlow(FiltersState())
@@ -91,6 +93,12 @@ class ProductsViewModel(
             it.copy(scrolled = isScrolled)
         }
     }
+    private fun updateBasketState(price: Int) {
+        _basketState.update {
+            val newPrice = it.totalPrice + price
+            it.copy(totalPrice = newPrice)
+        }
+    }
 
     fun selectFilter(id: Int) {
 
@@ -102,10 +110,20 @@ class ProductsViewModel(
             }
             else filter.copy(isSelected = false)
         }
+
+        changeFiltersState(filters)
+
+        loadProductsBySelectedCategory(id, isSelected)
+
+    }
+
+    private fun changeFiltersState(filters: List<FilterModel>) {
         _filtersState.update { state ->
             state.copy(filters = filters)
         }
+    }
 
+    private fun loadProductsBySelectedCategory(id: Int, isSelected: Boolean) {
         viewModelScope.launch {
             when(isSelected) {
                 true -> {
@@ -120,25 +138,25 @@ class ProductsViewModel(
                     }
                 }
                 false -> {
+                    val products = mutableListOf<ProductModel>()
 
+                    getAllProductsUseCase().collect { model ->
+                        _productsState.update { state ->
+                            products.add(ProductModel.map(model))
+
+                            state.copy(products = products)
+                        }
+                    }
                 }
             }
 
-        }
-
-    }
-
-    private fun updateBasketState(price: Int) {
-        _basketState.update {
-            val newPrice = it.totalPrice + price
-            it.copy(totalPrice = newPrice)
         }
     }
 
     private fun fetchProducts() = viewModelScope.launch{
         val products = productsState.value.products.toMutableList()
 
-        getAllProductsUseCase().collect { model ->
+        fetchAllProductsUseCase().collect { model ->
             _productsState.update { state ->
                 products.add(ProductModel.map(model))
 

@@ -14,6 +14,7 @@ import com.oneotrix.nti.domain.repository.CategoriesRepository
 import com.oneotrix.nti.domain.repository.ProductsRepository
 import com.oneotrix.nti.domain.repository.TagsRepository
 import com.oneotrix.nti.domain.usecase.DeleteProductFromBasketUseCase
+import com.oneotrix.nti.domain.usecase.FetchAllProductsUseCase
 import com.oneotrix.nti.domain.usecase.FilterProductsByCategoryUseCase
 import com.oneotrix.nti.domain.usecase.GetAllCategoriesUseCase
 import com.oneotrix.nti.domain.usecase.GetAllProductsUseCase
@@ -46,6 +47,7 @@ val appModule = module {
     single { NetworkDataSource() }
     single { LocalDataSource() }
 
+    factory { FetchAllProductsUseCase() }
     factory { GetAllProductsUseCase() }
     factory { GetAllCategoriesUseCase() }
     factory { GetSingleProductUseCase() }

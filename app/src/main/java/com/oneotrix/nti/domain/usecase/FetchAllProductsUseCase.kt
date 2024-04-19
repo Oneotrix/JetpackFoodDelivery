@@ -6,11 +6,12 @@ import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class GetAllProductsUseCase : KoinComponent {
+class FetchAllProductsUseCase : KoinComponent {
 
-    private val productsRepository: ProductsRepository by inject()
+        private val productsRepository: ProductsRepository by inject()
 
-    suspend operator fun invoke() = withContext(Dispatchers.Default) {
-        productsRepository.getProducts()
-    }
+        suspend operator fun invoke() = withContext(Dispatchers.Default) {
+                productsRepository.fetchProducts()
+        }
+
 }
